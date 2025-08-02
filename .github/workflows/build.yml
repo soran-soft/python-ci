@@ -27,9 +27,12 @@ jobs:
         working-directory: /workspace
         run: tar -czvf /tmp/build.tar.gz output.txt
 
-      - name: Upload tarball
-        working-directory: /workspace
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-tarball
-          path: /tmp/build.tar.gz
+      - name: List tarball
+        run: list /tmp
+
+#      - name: Upload tarball
+#        working-directory: /workspace
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: build-tarball
+#          path: /tmp/build.tar.gz
