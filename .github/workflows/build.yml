@@ -7,20 +7,20 @@ jobs:
   build:
     runs-on: ubuntu-22.04
 
-#    container:
-#      image: python:bookworm
+    container:
+      image: python:bookworm
 #      volumes:
 #        - ${{ github.workspace }}:/workspace
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          path: /workspace
+#        with:
+#          path: /workspace
 
       - name: List files
-        run: ls /workspace
-
+#        run: ls /workspace
+        run: ls ${{ github.workspace }}
 
 #      - name: Build project
 #        working-directory: /workspace
