@@ -10,23 +10,23 @@ jobs:
     container:
       image: python:alpine
       volumes:
-        - ${{ github.workspace }}:/workspace
+        - ${{ github.workspace }}:/app
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          path: /workspace
+          path: /app
 
       - name: Build project
-        working-directory: /workspace
+        working-directory: /app
         run: |
           pip install --upgrade pip &&
           pip install -r requirements.txt
           python main.py > output.txt
 
       - name: Create tarball
-        working-directory: /workspace
+        working-directory: /app
         run: tar -czvf /tmp/build.tar.gz output.txt
 
       - name: Upload tarball
