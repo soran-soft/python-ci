@@ -35,11 +35,9 @@ jobs:
         run: | 
           pwd
           ls /tmp
-          
 
-#      - name: Upload tarball
-#        working-directory: /workspace
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: build-tarball
-#          path: /tmp/build.tar.gz
+      - name: Upload tarball
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-tarball
+          path: /tmp/build.tar.gz
