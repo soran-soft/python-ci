@@ -1,0 +1,27 @@
+name: Build and Download
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build using Docker
+        uses: docker://python:3.11
+        with:
+          args: |
+            /bin/sh -c "
+            pip install --upgrade pip &&
+            pip install -r /app/requirements.txt
+            python /app/main.py > /app/output.txt
+            "
+          env:
+            HOME: /app
+          volume:
+            -${{ github.workspace }}:/app
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: output-artifact
+          path: output.txt
