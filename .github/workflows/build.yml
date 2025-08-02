@@ -1,27 +1,36 @@
 name: Build and Download
-on: [push]
+on:
+  push:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-22.04
+
+    container:
+      image: python:alpine
+      volumes:
+        - ${{ github.workspace }}:/workspace
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Build using Docker
-        uses: docker://python:3.11
+        uses: actions/checkout@v3
         with:
-          args: |
-            /bin/sh -c "
-            pip install --upgrade pip &&
-            pip install -r /app/requirements.txt
-            python /app/main.py > /app/output.txt
-            "
-        env:
-          HOME: /app
-        volume:
-          -${{ github.workspace }}:/app
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v2
+          path: /workspace
+
+      - name: Build project
+        working-directory: /workspace
+        run: |
+          pip install --upgrade pip &&
+          pip install -r requirements.txt
+          python main.py > output.txt
+
+      - name: Create tarball
+        working-directory: /workspace
+        run: tar -czvf /tmp/build.tar.gz -C ~/output.txt
+
+      - name: Upload tarball
+        uses: actions/upload-artifact@v3
         with:
-          name: output-artifact
-          path: output.txt
+          name: build-tarball
+          path: /tmp/build.tar.gz
