@@ -8,25 +8,25 @@ jobs:
     runs-on: ubuntu-22.04
 
     container:
-      image: python:alpine
+      image: python:bookworm
       volumes:
-        - ${{ github.workspace }}:/app
+        - ${{ github.workspace }}:/workspace
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          path: /app
+          path: /workspace
 
       - name: Build project
-        working-directory: /app
+        working-directory: /workspace
         run: |
           pip install --upgrade pip &&
           pip install -r requirements.txt
           python main.py > output.txt
 
       - name: Create tarball
-        working-directory: /app
+        working-directory: /workspace
         run: tar -czvf /tmp/build.tar.gz output.txt
 
       - name: Upload tarball
