@@ -30,7 +30,7 @@ jobs:
         run: tar -czvf /tmp/build.tar.gz -C ~/output.txt
 
       - name: Upload tarball
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-tarball
           path: /tmp/build.tar.gz
