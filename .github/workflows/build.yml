@@ -32,10 +32,9 @@ jobs:
           tar -czvf /tmp/build.tar.gz output.txt
 
       - name: List tarball
-        working-directory: /workspace
         run: | 
           pwd
-          list /tmp
+          ls /tmp
           
 
 #      - name: Upload tarball
