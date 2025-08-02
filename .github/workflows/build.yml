@@ -11,32 +11,25 @@ jobs:
       image: python:bookworm
       volumes:
         - ${{ github.workspace }}:/workspace
-#      options: --user 1001
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: List files
-        run: ls /workspace
-#        run: ls ${{ github.workspace }}
+      - name: Build project
+        working-directory: /workspace
+        run: |
+          pip install --upgrade pip &&
+          pip install -r requirements.txt
+          python main.py > output.txt
 
-#      - name: Build project
-#        working-directory: /workspace
-#        run: |
-#          pip install --upgrade pip &&
-#          pip install -r requirements.txt
-#          python main.py
-#
+      - name: Create tarball
+        working-directory: /workspace
+        run: tar -czvf /tmp/build.tar.gz output.txt
 
-#          > output.txt
-#
-#      - name: Create tarball
-#        working-directory: /workspace
-#        run: tar -czvf /tmp/build.tar.gz output.txt
-#
-#      - name: Upload tarball
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: build-tarball
-#          path: /tmp/build.tar.gz
+      - name: Upload tarball
+        working-directory: /workspace
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-tarball
+          path: /tmp/build.tar.gz
