@@ -9,18 +9,17 @@ jobs:
 
     container:
       image: python:bookworm
-#      volumes:
-#        - ${{ github.workspace }}:/workspace
+      volumes:
+        - ${{ github.workspace }}:/workspace
+#      options: --user 1001
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-#        with:
-#          path: /workspace
 
       - name: List files
-#        run: ls /workspace
-        run: ls ${{ github.workspace }}
+        run: ls /workspace
+#        run: ls ${{ github.workspace }}
 
 #      - name: Build project
 #        working-directory: /workspace
