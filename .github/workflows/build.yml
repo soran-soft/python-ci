@@ -19,16 +19,24 @@ jobs:
       - name: Build project
         working-directory: /workspace
         run: |
+          pwd
           pip install --upgrade pip &&
           pip install -r requirements.txt
           python main.py > output.txt
+          
 
       - name: Create tarball
         working-directory: /workspace
-        run: tar -czvf /tmp/build.tar.gz output.txt
+        run: | 
+          pwd
+          tar -czvf /tmp/build.tar.gz output.txt
 
       - name: List tarball
-        run: list /tmp
+        working-directory: /workspace
+        run: | 
+          pwd
+          list /tmp
+          
 
 #      - name: Upload tarball
 #        working-directory: /workspace
